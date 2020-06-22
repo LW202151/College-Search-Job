@@ -5,6 +5,7 @@ import com.SeventhGroup.CollegeSearchJob.dao.AlreadyAccessOfcomDao;
 import com.SeventhGroup.CollegeSearchJob.dao.AlreadyAccessOfuserDao;
 import com.SeventhGroup.CollegeSearchJob.dao.ResumeOfthreeDao;
 import com.SeventhGroup.CollegeSearchJob.dao.UserAccessyesDao;
+import com.SeventhGroup.CollegeSearchJob.entity.ComAlrealdyAccessEntity;
 import com.SeventhGroup.CollegeSearchJob.service.ResumeService;
 import com.SeventhGroup.CollegeSearchJob.service.ResumeyesService;
 import com.SeventhGroup.CollegeSearchJob.service.SendresumeService;
@@ -39,14 +40,15 @@ public class AccessController {
      * @return
      */
     @ApiOperation(value = "公司审核简历")
-    @RequestMapping(value = "/company/resumeAcees/{companyId}/{resumeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/company/resumeAcees/{companyId}/{applicationId}/{resumeId}", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> buy(@PathVariable(value = "companyId") String companyId,
-                               @PathVariable(value = "resumeId") String resumeId) {
+                                   @PathVariable(value = "applicationId") String applicationId,
+                                   @PathVariable(value = "resumeId") String resumeId) {
 
         Map<String, Object> map = new HashMap<>();
         try {
-        sendresumeService.buy(companyId, resumeId);
+        sendresumeService.buy(companyId, applicationId,resumeId);
         map.put("code", 0);
             map.put("msg","简历正在审核...");
     }
@@ -205,9 +207,9 @@ public Map<String, Object> getWhatISell(@PathVariable(value = "userId") String u
 
     @ApiOperation(value = "招聘已审核的简历")
     @ResponseBody
-    @RequestMapping(value = "/findAll/accessresume/{companyId}/{resumeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findAll/accessresume/{companyId}/{applicationId}", method = RequestMethod.GET)
     public Map<String, Object> findrByResumeaccess(@PathVariable(value = "companyId") String companyId
-            ,@PathVariable(value = "resumeId") String resumeId) {
+            ,@PathVariable(value = "applicationId") String applicationId) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -215,7 +217,8 @@ public Map<String, Object> getWhatISell(@PathVariable(value = "userId") String u
         map.put("code", 0);
         try {
             // map.put("data", sendresumeService.fromEntityListGetResumeList(sendresumeService.findBy(companyId,applicationId)));
-            map.put("data",alreadyAccessOfcomDao.findByCompanyIdAndResumeId(companyId,resumeId));
+            map.put("data",alreadyAccessOfcomDao.findByCompanyIdAndApplicationId(companyId,applicationId));
+
         }
         catch (SecondRuntimeException e) {
             map.put("code", 1);

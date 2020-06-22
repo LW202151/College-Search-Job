@@ -11,7 +11,7 @@ import java.util.List;
 public interface AlreadyAccessOfcomDao extends JpaRepository<ComAlrealdyAccessEntity,String> {
 
     List<ComAlrealdyAccessEntity> findByCompanyId(String companyId);
-    List<ComAlrealdyAccessEntity> findByCompanyIdAndResumeId(String companyId,String resumeId);
+    List<ComAlrealdyAccessEntity> findByCompanyIdAndApplicationId(String companyId,String applicationId);
     @Modifying
     void deleteByCompanyId(String companyId);
 

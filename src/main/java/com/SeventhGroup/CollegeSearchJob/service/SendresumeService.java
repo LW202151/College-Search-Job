@@ -219,14 +219,18 @@ public class SendresumeService {
     }
 
     @Transactional
-    public void buy(String companyId, String resumeId) throws SecondRuntimeException {
+    public void buy(String companyId, String applicationId ,String resumeId) throws SecondRuntimeException {
 
             List<SendresumeEntity> temp = sendresumeDao.findByResumeId(resumeId);
+           List<SendresumeEntity> tempOne = sendresumeDao.findByApplicationId(applicationId);
 
-            if (temp.size() == 0) {
-                throw new SecondRuntimeException("简历id不存在，无法审核");
+        if (temp.size() == 0) {
+                throw new SecondRuntimeException("简历id不存在，无法审核或简历已审核");
             }
 
+        if (tempOne.size() == 0) {
+            throw new SecondRuntimeException("招聘id不存在，无法审核");
+        }
             if (!companyService.checkUserIdExist(companyId)) {
                 throw new SecondRuntimeException("公司id不存在，无法审核");
             }
@@ -235,7 +239,7 @@ public class SendresumeService {
             userAlreadyAccessDao.save(new UserAlreadyAccessEntity(Util.geFulltUniqueId(), resumeId, temp.get(0).getUserId()));
 
             // poster存起来
-            comAlreadyAccessDao.save(new ComAlrealdyAccessEntity(Util.geFulltUniqueId(), resumeId, companyId));
+            comAlreadyAccessDao.save(new ComAlrealdyAccessEntity(Util.geFulltUniqueId(), resumeId, companyId,applicationId));
             //saveresumeAccessDao.save(new ComAlrealdyAccessEntity(Util.geFulltUniqueId(), resumeId, companyId));
 
         // 购物车中删除这个商品

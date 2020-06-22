@@ -16,6 +16,7 @@ public interface SendresumeDao extends JpaRepository<SendresumeEntity ,String> {
     List<SendresumeEntity> findByResumeId(String resumeId);
     List<SendresumeEntity> findByUserIdAndApplicationId(String userId,String applicationId);
     List<SendresumeEntity> findByCompanyId(String companyId);
+    List<SendresumeEntity> findByApplicationId(String applicationId);
     List<SendresumeEntity> findByUserIdAndCompanyId(String userId,String companyId);
     List<SendresumeEntity> findByCompanyIdAndApplicationId(String companyId,String application);
     @Modifying

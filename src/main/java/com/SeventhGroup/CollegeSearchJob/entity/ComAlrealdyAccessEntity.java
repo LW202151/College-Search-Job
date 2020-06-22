@@ -13,11 +13,13 @@ public class ComAlrealdyAccessEntity {
     private String id;
     private String resumeId;
     private String companyId;
+    private String applicationId;
 
-    public ComAlrealdyAccessEntity(String id, String resumeId, String companyId) {
+    public ComAlrealdyAccessEntity(String id, String resumeId, String companyId, String applicationId) {
         this.id = id;
         this.resumeId = resumeId;
         this.companyId = companyId;
+        this.applicationId = applicationId;
     }
 
     public String getId() {
@@ -42,5 +44,13 @@ public class ComAlrealdyAccessEntity {
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }
