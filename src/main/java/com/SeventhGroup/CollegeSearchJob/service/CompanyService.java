@@ -2,10 +2,7 @@ package com.SeventhGroup.CollegeSearchJob.service;
 
 
 import com.SeventhGroup.CollegeSearchJob.Execptions.SecondRuntimeException;
-import com.SeventhGroup.CollegeSearchJob.dao.CominfoDao;
-import com.SeventhGroup.CollegeSearchJob.dao.CominformationDao;
-import com.SeventhGroup.CollegeSearchJob.dao.CompanyDao;
-import com.SeventhGroup.CollegeSearchJob.dao.UserDao;
+import com.SeventhGroup.CollegeSearchJob.dao.*;
 import com.SeventhGroup.CollegeSearchJob.entity.*;
 import com.SeventhGroup.CollegeSearchJob.service.inner.CominfoContent;
 import com.SeventhGroup.CollegeSearchJob.util.Util;
@@ -23,6 +20,10 @@ public class CompanyService {
     CominfoDao cominfodao;
     @Resource
     CominformationDao cominformationDao;
+    @Resource
+    ComofemailDao comofemailDao;
+    @Resource
+    CheckcodeDao checkcodeDao;
 
     public  boolean checkUserIdExist(String companyId) {
         return companyDao.findById(companyId).isPresent();
@@ -33,22 +34,35 @@ public class CompanyService {
         List<CompanyEntity> checkcomEmail = companyDao.findByCompanyEmail(companyEmail);
         List<CompanyEntity> checkcomName = companyDao.findByComName(comName);
         List<CompanyEntity> checkcomPassword = companyDao.findByComPassword(comPassword);
+        List<CheckcodeEntity> checkcodeOfcom = checkcodeDao.findByCode(comName);
 
        // List<User> checkEmail = userdao.findByEmail(companyEmail);
         if (checkcomEmail.size() > 0) {
             throw  new SecondRuntimeException("该用户已注册");
         }
         if (checkcomName.size() > 0) {
-            throw  new SecondRuntimeException("该名称已被使用");
+            throw  new SecondRuntimeException("该验证码已被使用过");
+        }
+        if (checkcodeOfcom.size() == 0) {
+            throw  new SecondRuntimeException("验证码错误");
         }
         if (checkcomPassword.size() > 0) {
             throw  new SecondRuntimeException("该密码已经被使用过,请重新输入");
         }
         companyDao.save(new CompanyEntity(companyId, companyEmail, comName,comPassword));
-
+        comofemailDao.save(new ComofemailEntity(companyId,companyEmail));
         return companyId;
 
     }
+    public String getemail(String companyId){
+        List<ComofemailEntity> temp = comofemailDao.findByCompanyId(companyId);
+        return  temp.get(0).getCompanyEmail();
+
+    }
+
+
+
+
     public String login(String companyEmail,String comPassword){
         List<CompanyEntity> checkEmail = companyDao.findByCompanyEmail(companyEmail);
         List<CompanyEntity> checkPassword = companyDao.findByComPassword(comPassword);
@@ -71,8 +85,13 @@ public class CompanyService {
        */
     public String changePassword(String companyId, String companyEmail,String code,String comPassword) {
         List<CompanyEntity> checkEmail = companyDao.findByCompanyEmail(companyEmail);
+        List<CheckcodeEntity> checkcodeOfpassword = checkcodeDao.findByCode(code);
+
         if (checkEmail.size() == 0) {
             throw new SecondRuntimeException("该用户不存在，无法修改密码");
+        }
+        if (checkcodeOfpassword.size() == 0) {
+            throw new SecondRuntimeException("验证码错误");
         }
         CompanyEntity userop = companyDao.findById(companyId).get();
         userop.setComPassword(comPassword);

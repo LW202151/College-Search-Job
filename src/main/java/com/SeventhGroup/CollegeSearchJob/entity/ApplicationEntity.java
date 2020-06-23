@@ -17,12 +17,12 @@ public class ApplicationEntity {
     private String positiondesc;
     private String requirement;
     private Integer num;
-    private Float money;
+    private String money;
     private String address;
     private String tag;
     private String uptime;
 
-    public ApplicationEntity(String applicationId, String comName, String companydesc, String position, String positiondesc, String requirement, Integer num, Float money, String address,String tag, String uptime) {
+    public ApplicationEntity(String applicationId, String comName, String companydesc, String position, String positiondesc, String requirement, Integer num, String money, String address, String tag, String uptime) {
         this.applicationId = applicationId;
         this.comName = comName;
         this.companydesc = companydesc;
@@ -32,7 +32,7 @@ public class ApplicationEntity {
         this.num = num;
         this.money = money;
         this.address = address;
-        this.tag=tag;
+        this.tag = tag;
         this.uptime = uptime;
     }
 
@@ -92,11 +92,11 @@ public class ApplicationEntity {
         this.num = num;
     }
 
-    public Float getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 

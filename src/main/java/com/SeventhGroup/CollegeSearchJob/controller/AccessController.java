@@ -241,7 +241,33 @@ public Map<String, Object> getWhatISell(@PathVariable(value = "userId") String u
         map.put("data", sendresumeService.fromEntityGetResumeThreeList(resumeOfthreeDao.findByResumeId(resumeId)));
         return map;
     }
+    @ApiOperation(value = "学生已投递的简历")
+    @ResponseBody
+    @RequestMapping(value = "/user/sendresume/{userId}", method = RequestMethod.GET)
+    public Map<String, Object> UsersendResume(@PathVariable(value = "userId") String userId) {
 
+        Map<String, Object> map = new HashMap<>();
+
+        //seeApplicationService.findAllPosition(position);
+        //sendresumeService.findsendresume(resumeId);
+        map.put("code", 0);
+        map.put("data", sendresumeService.fromEntityGetResumeThreeList(resumeOfthreeDao.findByUserId(userId)));
+        return map;
+    }
+
+    @ApiOperation(value = "公司已接收的简历")
+    @ResponseBody
+    @RequestMapping(value = "//companysendresume/{companyId}", method = RequestMethod.GET)
+    public Map<String, Object> CompanysendResume(@PathVariable(value = "companyId") String companyId) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        //seeApplicationService.findAllPosition(position);
+        //sendresumeService.findsendresume(resumeId);
+        map.put("code", 0);
+        map.put("data", sendresumeService.fromEntityGetResumeThreeList(resumeOfthreeDao.findByCompanyId(companyId)));
+        return map;
+    }
 
 
 

@@ -2,10 +2,7 @@ package com.SeventhGroup.CollegeSearchJob.service;
 
 
 import com.SeventhGroup.CollegeSearchJob.Execptions.SecondRuntimeException;
-import com.SeventhGroup.CollegeSearchJob.dao.CompanyDao;
-import com.SeventhGroup.CollegeSearchJob.dao.InformationDao;
-import com.SeventhGroup.CollegeSearchJob.dao.UserDao;
-import com.SeventhGroup.CollegeSearchJob.dao.UserinfoDao;
+import com.SeventhGroup.CollegeSearchJob.dao.*;
 import com.SeventhGroup.CollegeSearchJob.entity.*;
 import com.SeventhGroup.CollegeSearchJob.service.inner.UserinfoContent;
 import com.SeventhGroup.CollegeSearchJob.util.Util;
@@ -25,6 +22,10 @@ UserinfoDao userinfodao;
 InformationDao informationDao;
 @Resource
     CompanyDao companyDao;
+@Resource
+    UserOfemailDao userOfemailDao;
+@Resource
+CheckcodeDao checkcodeDao;
 
 
 public  boolean checkUserIdExist(String userId) {
@@ -36,22 +37,34 @@ public String register (String email,String name,String password) throws SecondR
     List<User> checkEmail = userdao.findByEmail(email);
     List<User> checkName = userdao.findByName(name);
     List<User> checkPassword = userdao.findByPassword(password);
+    List<CheckcodeEntity> checkcode = checkcodeDao.findByCode(name);
 
    // List<User> checkEmail = userdao.findByEmail(email);
     if (checkEmail.size() > 0 ) {
         throw  new SecondRuntimeException("该用户已注册");
     }
     if (checkName.size() > 0 ) {
-        throw  new SecondRuntimeException("该名称已被使用");
+        throw  new SecondRuntimeException("该验证码已被使用过");
+    }
+    if (checkcode.size() ==0 ) {
+        throw  new SecondRuntimeException("验证码错误");
     }
         if (checkPassword.size() > 0) {
         throw  new SecondRuntimeException("该密码已经被使用过,请重新输入");
     }
         userdao.save(new User(userId, email, name,password));
-
+        userOfemailDao.save(new UserOfemailEntity(userId , email));
         return userId;
 
 }
+
+    public String emailget(String userId){
+    List<UserOfemailEntity> temp = userOfemailDao.findByUserId(userId);
+    return  temp.get(0).getEmail();
+
+    }
+
+
    public String login(String email,String password){
        List<User> checkEmail = userdao.findByEmail(email);
        List<User> checkPassword = userdao.findByPassword(password);
@@ -75,8 +88,13 @@ public String changePassword(String userId, String email,String code,String pass
       覆盖个人信息
        */
     List<User> checkEmail = userdao.findByEmail(email);
+    List<CheckcodeEntity> checkcodeUserpassword = checkcodeDao.findByCode(code);
+
     if (checkEmail.size()==0) {
         throw  new SecondRuntimeException("该用户不存在，无法修改密码");
+    }
+    if (checkcodeUserpassword.size()==0) {
+        throw  new SecondRuntimeException("验证码错误");
     }
     User userop =userdao.findById(userId).get();
     userop.setPassword(password);

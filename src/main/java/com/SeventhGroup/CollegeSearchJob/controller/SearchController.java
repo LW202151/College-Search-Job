@@ -53,7 +53,7 @@ public class SearchController {
                                         @PathVariable(value = "positiondesc") String positiondesc,
                                         @PathVariable(value = "requirement") String requirement,
                                         @PathVariable(value = "num") Integer num,
-                                        @PathVariable(value = "money") Float money,
+                                        @PathVariable(value = "money") String money,
                                         @PathVariable(value = "address") String address,
                                         @PathVariable(value = "tag") String tag,
                                         @PathVariable(value = "companyId") String companyId) {
@@ -91,26 +91,6 @@ public class SearchController {
 
         return map;
     }
-
-
-
-
-/*
-    //模糊查询
-    @ApiOperation(value = "公司名(comName)查找招聘")
-    @ResponseBody
-    @RequestMapping(value="dim")
-    public String dim(Model model, HttpServletRequest request) {
-        String name=request.getParameter("name");		//获取html页面搜索框的值
-        List<ApplicationEntity> unit=seeApplicationService.findByName(name);	//在数据库中进行查询
-        model.addAttribute("unit", unit);	//模板映射
-        return "page/demo/dim";
-    }
-
-
-*/
-
-
 
 
     /***
@@ -172,7 +152,7 @@ public class SearchController {
      * 查看公司已发布的招聘（时间排序）
      */
 
-    @ApiOperation(value = "查看公司已发布的招聘（时间排序）")
+    @ApiOperation(value = "查看公司已发布的招聘")
     @ResponseBody
     @RequestMapping(value = "/findAll/appOfcom/sort/{companyId}", method = RequestMethod.GET)
     public Map<String, Object> findAppOfsort(@PathVariable(value = "companyId") String companyId) {

@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InformationService {
@@ -140,7 +141,17 @@ public class InformationService {
 
         return res;
     }
+/*
+    public String emailget(String userId){
+       String id=userId;
+      //  Optional<User> temp = userdao.findById(id);
+        //List<User> temp = userdao.findById(userId);
 
+
+    }
+
+
+ */
 
 
 

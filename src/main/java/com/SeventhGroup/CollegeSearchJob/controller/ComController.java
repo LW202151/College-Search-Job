@@ -29,6 +29,8 @@ public class ComController {
     CominformationService cominformationService;
     @Resource
     CominformationDao cominformationDao;
+    @Resource
+    CompanyService companyService;
 
 
     /**
@@ -84,6 +86,7 @@ public class ComController {
 
         try {
             map.put("data", cominformationService.fromEntityListGetPicofcomList(cominformationDao.findByCompanyId(companyId)));
+            map.put("comemail",companyService.getemail(companyId));
         } catch (SecondRuntimeException e) {
             map.put("code", 1);
             map.put("msg", e.getMessage());

@@ -59,7 +59,7 @@ public class SeeApplicationService {
         return searchDao.findByApplicationId(applicationId).size() != 0;
     }
 
-    public String postGood(String comName, String companydesc, String position, String positiondesc, String requirement, Integer num, Float money, String address, String tag,String companyId) throws SecondRuntimeException {
+    public String postGood(String comName, String companydesc, String position, String positiondesc, String requirement, Integer num, String money, String address, String tag,String companyId) throws SecondRuntimeException {
        List<ApplicationEntity> temp = searchDao.findByPosition(position);
        // List<ApplicationEntity> checktemp = searchDao.findByCompanyId(companyId);
 
@@ -94,19 +94,6 @@ public class SeeApplicationService {
         return checkname.get(0).getApplicationId();
     }
 
-
-/*
-    public List<ApplicationEntity> findByName(String comName){
-        List<ApplicationEntity> checkname = searchDao.findByComName(comName);
-        if (checkname.size() == 0) {
-            throw new SecondRuntimeException("该公司未发布招聘");
-        }
-
-        return searchDao.findByComName(comName);
-    }
-
-
- */
 
 
     public String findAllPosition(String position) throws SecondRuntimeException {
@@ -149,7 +136,7 @@ public class SeeApplicationService {
 
         List<ApplicationEntity> result = new ArrayList<>();
         if(temp.size()==0){
-            throw new SecondRuntimeException("公司id不存在，无法获得公司发布的招聘");
+            throw new SecondRuntimeException("公司id未发布招聘，无法获得公司发布的招聘");
         }
 
         for (AppOfcomEntity entity : temp) {
@@ -163,7 +150,6 @@ public class SeeApplicationService {
 
         return result;
     }
-
 
 
     public void getremoveApp(String companyId) throws SecondRuntimeException{

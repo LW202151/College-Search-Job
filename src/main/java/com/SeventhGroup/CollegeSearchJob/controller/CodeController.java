@@ -5,10 +5,13 @@ import com.SeventhGroup.CollegeSearchJob.Execptions.SecondRuntimeException;
 import com.SeventhGroup.CollegeSearchJob.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +37,8 @@ public class CodeController {
 
             //setMapFromUserId(map, userId);
             map.put("msg", "验证码已发送");
+            // map.put("map", emailService.sendEmailByInput(email));
+
             //map.put("user_id", userId);
             //map.setMapFromUserId();
 
@@ -44,8 +49,4 @@ public class CodeController {
 
         return map;
     }
-
-
-
-
 }

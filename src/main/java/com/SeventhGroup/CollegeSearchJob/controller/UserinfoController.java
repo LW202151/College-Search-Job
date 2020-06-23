@@ -3,6 +3,7 @@ package com.SeventhGroup.CollegeSearchJob.controller;
 
 import com.SeventhGroup.CollegeSearchJob.Execptions.SecondRuntimeException;
 import com.SeventhGroup.CollegeSearchJob.dao.InformationDao;
+import com.SeventhGroup.CollegeSearchJob.dao.UserDao;
 import com.SeventhGroup.CollegeSearchJob.service.InformationService;
 import com.SeventhGroup.CollegeSearchJob.service.UserService;
 import com.SeventhGroup.CollegeSearchJob.service.inner.InformationBodyContent;
@@ -24,6 +25,8 @@ public class UserinfoController {
   InformationService informationService;
   @Resource
     InformationDao informationDao;
+  @Resource
+    UserDao userDao;
 
 
 /**
@@ -64,6 +67,7 @@ public Map<String, Object> post(@PathVariable(value = "userId") String userId,
     try {
         informationService.postInformation(userId, content.getInformation());
         map.put("mag", "success");
+
     }
     catch (SecondRuntimeException e) {
         map.put("code", 1);
@@ -88,6 +92,8 @@ public Map<String, Object> post(@PathVariable(value = "userId") String userId,
 
         try {
             map.put("data", informationService.fromEntityListGetPicUserList(informationDao.findByUserId(userId)));
+            map.put("email",userservice.emailget(userId));
+
         }
         catch (SecondRuntimeException e) {
             map.put("code", 1);
@@ -109,6 +115,8 @@ public Map<String, Object> post(@PathVariable(value = "userId") String userId,
 
         try {
             map.put("data", informationService.fromEntityListGetPicUserList(informationDao.findAll()));
+            //map.put("email",userservice.emailget(userId));
+
         }
         catch (SecondRuntimeException e) {
             map.put("code", 1);
