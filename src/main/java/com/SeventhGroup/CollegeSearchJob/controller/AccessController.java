@@ -51,6 +51,7 @@ public class AccessController {
         sendresumeService.buy(companyId, applicationId,resumeId);
         map.put("code", 0);
             map.put("msg","简历正在审核...");
+            map.put("data",resumeOfthreeDao.findByResumeId(resumeId));
     }
     catch (SecondRuntimeException e) {
         map.put("code", 1);
@@ -73,6 +74,8 @@ public class AccessController {
             sendresumeService.Yes(companyId, resumeId);
             map.put("code", 0);
             map.put("msg","简历通过审核...");
+            map.put("data",resumeOfthreeDao.findByResumeId(resumeId));
+
         }
         catch (SecondRuntimeException e) {
             map.put("code", 1);

@@ -61,15 +61,18 @@ public class SeeApplicationService {
 
     public String postGood(String comName, String companydesc, String position, String positiondesc, String requirement, Integer num, String money, String address, String tag,String companyId) throws SecondRuntimeException {
        List<ApplicationEntity> temp = searchDao.findByPosition(position);
-       // List<ApplicationEntity> checktemp = searchDao.findByCompanyId(companyId);
+      List<AppOfcomEntity> tempapp = appOfcomDao.findByCompanyId(companyId);
+
+        // List<ApplicationEntity> checktemp = searchDao.findByCompanyId(companyId);
 
 
         if (!companyService.checkUserIdExist(companyId)) {
             throw new SecondRuntimeException("公司id不存在，无法发布招聘，请注册");
         }
+        if(temp.size()>0 && tempapp.size()>0){
 
-        if (temp.size()==1) {
-            throw new SecondRuntimeException("该岗位的招聘已发布");
+            throw new SecondRuntimeException("该岗位已发布招聘");
+
         }
         String applicationId = Util.getUniqueId();
 

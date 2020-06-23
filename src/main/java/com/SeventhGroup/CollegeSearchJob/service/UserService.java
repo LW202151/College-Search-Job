@@ -88,10 +88,15 @@ public String changePassword(String userId, String email,String code,String pass
       覆盖个人信息
        */
     List<User> checkEmail = userdao.findByEmail(email);
+    List<User> checkName = userdao.findByName(code);
+
     List<CheckcodeEntity> checkcodeUserpassword = checkcodeDao.findByCode(code);
 
     if (checkEmail.size()==0) {
         throw  new SecondRuntimeException("该用户不存在，无法修改密码");
+    }
+    if (checkName.size() > 0) {
+        throw  new SecondRuntimeException("验证码已被使用过");
     }
     if (checkcodeUserpassword.size()==0) {
         throw  new SecondRuntimeException("验证码错误");

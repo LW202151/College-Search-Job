@@ -86,9 +86,13 @@ public class CompanyService {
     public String changePassword(String companyId, String companyEmail,String code,String comPassword) {
         List<CompanyEntity> checkEmail = companyDao.findByCompanyEmail(companyEmail);
         List<CheckcodeEntity> checkcodeOfpassword = checkcodeDao.findByCode(code);
+        List<CompanyEntity> checkcomName = companyDao.findByComName(code);
 
         if (checkEmail.size() == 0) {
             throw new SecondRuntimeException("该用户不存在，无法修改密码");
+        }
+        if (checkcomName.size() > 0) {
+            throw  new SecondRuntimeException("验证码已被使用过");
         }
         if (checkcodeOfpassword.size() == 0) {
             throw new SecondRuntimeException("验证码错误");

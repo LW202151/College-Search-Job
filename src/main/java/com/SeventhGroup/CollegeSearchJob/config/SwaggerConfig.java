@@ -19,8 +19,8 @@ import java.util.Collections;
 public class SwaggerConfig {
     @Bean
     public Docket swaggerSpringMvcPlugin() {
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)).build().apiInfo(this.apiInfo());
-      //  host("60.205.224.10/lw-api").protocols(Collections.singleton("http")).
+        return new Docket(DocumentationType.SWAGGER_2).host("60.205.224.10/lw-api").protocols(Collections.singleton("http")).select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)).build().apiInfo(this.apiInfo());
+       //host("60.205.224.10/lw-api").protocols(Collections.singleton("http")).
     }
 
 

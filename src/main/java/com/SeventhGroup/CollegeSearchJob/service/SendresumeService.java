@@ -60,7 +60,7 @@ public class SendresumeService {
             throw new SecondRuntimeException("用户id不存在，无法投递简历，请注册");
         }
         if (checkapp.size() > 0 || check.size() > 0) {
-            throw new SecondRuntimeException("已投递");
+            throw new SecondRuntimeException("简历已投递过");
         }
         if (checkOfapp.size() == 0) {
             throw new SecondRuntimeException("招聘未发布");

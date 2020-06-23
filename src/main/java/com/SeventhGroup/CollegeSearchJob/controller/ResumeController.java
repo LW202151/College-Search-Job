@@ -41,7 +41,7 @@ public class ResumeController {
 
     @ApiOperation(value="学生投递简历")
     @ResponseBody
-    @RequestMapping(value = "/user/sendresume/{userId}}/{companyId}/{applicationId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/sendresume/{userId}/{companyId}/{applicationId}",method = RequestMethod.POST)
     public Map<String, Object> sendresume(@PathVariable(value = "userId") String userId,
                                       @PathVariable(value = "companyId") String companyId,
                                       @PathVariable(value = "applicationId") String applicationId,
