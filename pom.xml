@@ -167,7 +167,7 @@
 
 			<artifactId>json-smart</artifactId>
 
-			<version>RELEASE</version>
+			<version>1.3.3</version>
 
 			<scope>compile</scope>
 
